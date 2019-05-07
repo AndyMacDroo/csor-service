@@ -1,0 +1,11 @@
+sudo: false
+
+dist: xenial
+python:
+  - "3.6"
+
+install:
+  - pip install -r src/requirements.txt
+
+script:
+  - python3 -m unittest discover -s test -p "*Test.py"
