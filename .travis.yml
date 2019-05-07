@@ -1,11 +1,10 @@
 sudo: false
 
-dist: xenial
+language: python
 python:
-  - "3.7"
-
+  - "3.6"
 install:
-  - pip3 install -r requirements.txt
+  - pip install -r requirements.txt
 
 script:
   - python3 -m unittest discover -s test -p "*Test.py"
