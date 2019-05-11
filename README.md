@@ -1,4 +1,4 @@
-# Security Image Processor [![Build Status](https://travis-ci.org/AndyMacDroo/security-image-processor.svg?branch=master)](https://travis-ci.org/AndyMacDroo/security-image-processor) [![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
+# CSORS - Camera Stream Object Recognition Service [![Build Status](https://travis-ci.org/AndyMacDroo/csor-service.svg?branch=master)](https://travis-ci.org/AndyMacDroo/csor-service) [![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/)
 
 This project processes [RTSP](https://tools.ietf.org/html/rfc2326) video streams using OpenCV and the [YOLO Real-Time Object Detection Model](https://pjreddie.com/darknet/yolo/).
 
@@ -7,8 +7,7 @@ This project processes [RTSP](https://tools.ietf.org/html/rfc2326) video streams
 
 **Installing Dependencies**
 ```sh
-src/yolov3-coco/get_model.sh
-pip install -r requirements.txt
+src/yolov3-coco/get_model.sh && pip install -r requirements.txt
 ```
 
 **Running Unit Tests**
@@ -16,12 +15,16 @@ pip install -r requirements.txt
 python -m unittest discover -s test -p "*Test.py"
 ```
 
-## Configuration ##
+## Usage ##
 
-**Program Arguments**
+Simply pass a suitable RTSP stream URL as an argument when running the application:
+
+```sh
+python src/main.py -loc http://82.215.168.242:8083/mjpg/video.mjpg
+```
 
 For a full list of arguments run:
-`python main.py -h`
+`python src/main.py -h`
 ```sh
 usage: main.py [-h] [-m MODEL_PATH] [-w WEIGHTS] [-cfg CONFIG] [-i IMAGE_PATH]
                [-v VIDEO_PATH] [-vo VIDEO_OUTPUT_PATH] [-l LABELS]

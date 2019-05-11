@@ -13,7 +13,7 @@ from src.video.VideoStream import VideoStream
 STREAM = None
 
 
-def run_security_image_processor(config):
+def run_csor_service(config):
     STREAM = VideoStream(stream_location=config.stream_location) # initialise the video stream
     event_handler = VideoEventHandler(config=config)
     object_recognition_service = ObjectRecognitionService(config=config, video_stream=STREAM)
@@ -98,7 +98,7 @@ if __name__ == '__main__':
                         help='Stream location')
 
     config, unparsed = parser.parse_known_args()
-    run_security_image_processor(config)
+    run_csor_service(config)
     while True:
         schedule.run_pending()
         if cv.waitKey(1) & 0xFF == ord('q'):
