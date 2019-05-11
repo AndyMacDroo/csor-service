@@ -1,3 +1,5 @@
+import sys
+sys.path.append("..")
 import schedule
 import argparse
 import cv2 as cv
