@@ -5,17 +5,21 @@ from src.log.Log import LOG
 
 class EventStreamAnalyser:
 
-    def __init__(self, event_data_stream, event_handler):
+    def __init__(self, config, event_data_stream, event_handler):
+        self.config = config
         self.event_data_stream = event_data_stream
         self.handler = event_handler
-        LOG.info("Initialised EventStreamAnalyser")
+        if self.config.debug:
+            LOG.info("Initialised EventStreamAnalyser")
 
     def analyse_stream(self):
-        LOG.info("Checking stream for event")
+        if self.config.debug:
+            LOG.info("Checking stream for event")
         event = self.check_stream_for_event()
         if event is not None and event:
-            LOG.info("Event found")
             self.__dispatch_notification_for_event(event)
+            if self.config.debug:
+                LOG.info("Event found")
 
     def daemon(self):
         self.__configure_schedule_for_job().do(self.analyse_stream)
@@ -27,4 +31,4 @@ class EventStreamAnalyser:
         self.handler.handle(event)
 
     def __configure_schedule_for_job(self):
-        return schedule.every(1).seconds
+        return schedule.every(self.config.refresh_interval).seconds
