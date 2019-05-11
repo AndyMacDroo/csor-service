@@ -14,7 +14,7 @@ class ObjectRecognitionService:
         self.video_stream = video_stream
         self.count = 0
         if self.config.debug:
-            LOG.info("Initialised ObjectRecognitionService")
+            LOG.debug("Initialised ObjectRecognitionService")
         try:
             self.labels = open(config.labels).read().strip().split('\n')
             self.colors = np.random.randint(0, 255, size=(len(self.labels), 3), dtype='uint8')
@@ -32,10 +32,10 @@ class ObjectRecognitionService:
 
     def read_stream_for_event(self):
         if self.config.debug:
-            LOG.info("Reading stream for event")
+            LOG.debug("Reading stream for event")
         event_stream =  self.__run_recognition_check()
         if event_stream and self.config.debug:
-            LOG.info("Event stream exists")
+            LOG.debug("Event stream exists")
         return event_stream
 
     def get_video_stream(self):

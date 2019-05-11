@@ -9,8 +9,8 @@ class VideoEventHandler:
 
     def handle(self, event):
         if self.config.debug:
-            LOG.info("Handling event")
+            LOG.debug("Handling event")
             for detected in event[3]:
-                LOG.info("Detected %s" % event[5][detected])
+                LOG.debug("Detected %s" % event[5][detected])
         if self.config.show_cam:
             cv.imshow('webcam', event[0])

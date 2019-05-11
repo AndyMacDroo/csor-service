@@ -7,12 +7,12 @@ from src.analysis.EventStreamAnalyser import EventStreamAnalyser
 from src.object_recognition.ObjectRecognitionService import ObjectRecognitionService
 from src.video.VideoStream import VideoStream
 
-
-STREAM_LOCATION = "http://82.215.168.242:8083/mjpg/video.mjpg"
+# Global variable for access to close stream
 STREAM = None
 
+
 def run_security_image_processor(config):
-    STREAM = VideoStream(stream_location=STREAM_LOCATION) # initialise the video stream
+    STREAM = VideoStream(stream_location=config.stream_location) # initialise the video stream
     event_handler = VideoEventHandler(config=config)
     object_recognition_service = ObjectRecognitionService(config=config, video_stream=STREAM)
     EventStreamAnalyser(config=config, event_data_stream=object_recognition_service, event_handler= event_handler).daemon()
@@ -89,6 +89,11 @@ if __name__ == '__main__':
                         type=int,
                         default=0.1,
                         help='Camera refresh interval')
+
+    parser.add_argument('-loc', '--stream-location',
+                        type=str,
+                        default='http://82.215.168.242:8083/mjpg/video.mjpg',
+                        help='Stream location')
 
     config, unparsed = parser.parse_known_args()
     run_security_image_processor(config)
