@@ -42,20 +42,20 @@ class ObjectRecognitionService:
         return self.video_stream
 
     def __run_recognition_check(self):
-        _, frame = self.get_video_stream().read()
-        if frame is None:
+        _, self.frame = self.get_video_stream().read()
+        if self.frame is None:
             LOG.warn("No frame detected in stream")
             return {}
-        height, width = frame.shape[:2]
+        height, width = self.frame.shape[:2]
         if not self.net:
             return {}
         if self.count == 0:
-            frame, self.boxes, self.confidences, self.classids, self.idxs = infer_image(self.net, self.layer_names, \
-                                                                    height, width, frame, self.colors, self.labels, self.config)
+            self.frame, self.boxes, self.confidences, self.classids, self.idxs = infer_image(self.net, self.layer_names, \
+                                                                    height, width, self.frame, self.colors, self.labels, self.config)
             self.count += 1
         else:
             frame, self.boxes, self.confidences, self.classids, self.idxs = infer_image(self.net, self.layer_names, \
-                                                                    height, width, frame, self.colors, self.labels, self.config, self.boxes,
+                                                                    height, width, self.frame, self.colors, self.labels, self.config, self.boxes,
                                                                     self.confidences, self.classids, self.idxs, infer=False)
             self.count = (self.count + 1) % 6
-        return frame, self.boxes, self.confidences, self.classids, self.idxs, self.labels
+        return self.frame, self.boxes, self.confidences, self.classids, self.idxs, self.labels

@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-d', '--debug',
                         type=bool,
-                        default=True,
+                        default=False,
                         help='Global debug mode')
 
     parser.add_argument('-sc', '--show-cam',
@@ -89,8 +89,8 @@ if __name__ == '__main__':
 
     parser.add_argument('-ri', '--refresh-interval',
                         type=int,
-                        default=0.1,
-                        help='Camera refresh interval')
+                        default=5,
+                        help='Camera refresh interval in seconds')
 
     parser.add_argument('-loc', '--stream-location',
                         type=str,
