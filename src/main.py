@@ -1,6 +1,6 @@
 import sys
 sys.path.append("..")
-import schedule
+
 import argparse
 import cv2 as cv
 
@@ -48,11 +48,6 @@ if __name__ == '__main__':
                         type=str,
                         help='The path to the video file')
 
-    parser.add_argument('-vo', '--video-output-path',
-                        type=str,
-                        default='./output.avi',
-                        help='The path of the output video file')
-
     parser.add_argument('-l', '--labels',
                         type=str,
                         default='./yolov3-coco/coco-labels',
@@ -79,29 +74,50 @@ if __name__ == '__main__':
 
     parser.add_argument('-d', '--debug',
                         type=bool,
-                        default=False,
+                        default=True,
                         help='Global debug mode')
 
     parser.add_argument('-sc', '--show-cam',
                         type=bool,
-                        default=True,
+                        default=False,
                         help='Show camera')
 
     parser.add_argument('-ri', '--refresh-interval',
                         type=int,
-                        default=5,
+                        default=1,
                         help='Camera refresh interval in seconds')
 
     parser.add_argument('-loc', '--stream-location',
                         type=str,
-                        default='http://82.215.168.242:8083/mjpg/video.mjpg',
+                        default='rtsp://admin:admin@192.168.0.33/11',
                         help='Stream location')
+
+    parser.add_argument('-stok', '--slack-token',
+                        type=str,
+                        default='CHANGE_ME',
+                        help='Slack bot token')
+
+    parser.add_argument('-stit', '--slack-alert-title',
+                        type=str,
+                        default='GLaDOS Security Alert',
+                        help='Slack notification title')
+
+    parser.add_argument('-schan', '--slack-channel',
+                        type=str,
+                        default='#security',
+                        help='Slack notification channel')
+
+    parser.add_argument('-tdir', '--tmp-file-location',
+                        type=str,
+                        default='/tmp/captured.jpg',
+                        help='Name and location of temporary file')
+
+    parser.add_argument('-subj', '--subject-of-interest',
+                        type=str,
+                        default='person',
+                        help='Subject of interest')
 
     config, unparsed = parser.parse_known_args()
     run_csor_service(config)
-    while True:
-        schedule.run_pending()
-        if cv.waitKey(1) & 0xFF == ord('q'):
-            break
     STREAM.close()
     cv.destroyAllWindows()

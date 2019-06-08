@@ -1,11 +1,7 @@
+from src.log.Log import LOG
 import numpy as np
 import cv2 as cv
 import time
-
-
-def show_image(img):
-    cv.imshow("Image", img)
-    cv.waitKey(0)
 
 
 def draw_labels_and_boxes(img, boxes, confidences, classids, idxs, colors, labels):
@@ -77,7 +73,7 @@ def infer_image(net, layer_names, height, width, img, colors, labels, FLAGS,
         end = time.time()
 
         if FLAGS.show_time:
-            print("[INFO] YOLOv3 took {:6f} seconds".format(end - start))
+            LOG.debug("[INFO] YOLOv3 took {:6f} seconds".format(end - start))
 
         # Generate the boxes, confidences, and classIDs
         boxes, confidences, classids = generate_boxes_confidences_classids(outs, height, width, FLAGS.confidence)
@@ -89,6 +85,9 @@ def infer_image(net, layer_names, height, width, img, colors, labels, FLAGS,
         raise Exception('[ERROR] Required variables are set to None before drawing boxes on images.')
 
     # Draw labels and boxes on the image
+    start = time.time()
     img = draw_labels_and_boxes(img, boxes, confidences, classids, idxs, colors, labels)
-
+    end = time.time()
+    if FLAGS.show_time:
+        LOG.debug("Drawing labels and boxes took {:6f} seconds".format(end - start))
     return img, boxes, confidences, classids, idxs

@@ -10,7 +10,7 @@ class ObjectRecognitionService:
     def __init__(self, config, video_stream):
         self.config = config
         if video_stream is None:
-            raise ValueError("Cannot pass None as stream")
+            raise ValueError("Cannot pass empty stream")
         self.video_stream = video_stream
         self.count = 0
         if self.config.debug:
@@ -46,6 +46,8 @@ class ObjectRecognitionService:
         if self.frame is None:
             LOG.warn("No frame detected in stream")
             return {}
+
+        self.frame = cv.resize(self.frame, (0,0), fx=0.5, fy=0.5) # half image size for processing
         height, width = self.frame.shape[:2]
         if not self.net:
             return {}
