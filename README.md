@@ -2,8 +2,14 @@
 
 This project processes [RTSP](https://tools.ietf.org/html/rfc2326) video streams using OpenCV and the [YOLO Real-Time Object Detection Model](https://pjreddie.com/darknet/yolo/).
 
+Frames containing a _"subject of interest"_ are posted to a slack channel.
+
 
 ## Getting Started ##
+
+**Create Slack Bot Account**
+
+Follow Slack documentation for [Bot-Users](https://api.slack.com/bot-users).
 
 **Installing Dependencies**
 ```sh
@@ -27,8 +33,9 @@ For a full list of arguments run:
 `python src/main.py -h`
 ```sh
 usage: main.py [-h] [-m MODEL_PATH] [-w WEIGHTS] [-cfg CONFIG] [-i IMAGE_PATH]
-               [-v VIDEO_PATH] [-vo VIDEO_OUTPUT_PATH] [-l LABELS]
-               [-c CONFIDENCE] [-th THRESHOLD] [-t SHOW_TIME] [-d DEBUG]
-               [-sc SHOW_CAM] [-ri REFRESH_INTERVAL] [-loc STREAM_LOCATION]
-
+               [-v VIDEO_PATH] [-l LABELS] [-c CONFIDENCE] [-th THRESHOLD]
+               [-t SHOW_TIME] [-d DEBUG] [-sc SHOW_CAM] [-ri REFRESH_INTERVAL]
+               [-loc STREAM_LOCATION] [-stok SLACK_TOKEN]
+               [-stit SLACK_ALERT_TITLE] [-schan SLACK_CHANNEL]
+               [-tdir TMP_FILE_LOCATION] [-subj SUBJECT_OF_INTEREST]
 ```
